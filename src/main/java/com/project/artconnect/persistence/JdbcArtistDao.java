@@ -16,12 +16,6 @@ import javax.sql.DataSource;
  */
 public class JdbcArtistDao implements ArtistDao {
 
-    private final DataSource dataSource;
-
-    public JdbcArtistDao(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
-
     // TODO: Implement SELECT * FROM artist
     @Override
     public List<Artist> findAll() {
@@ -48,7 +42,7 @@ public class JdbcArtistDao implements ArtistDao {
     @Override
     public void save(Artist artist) {
         String sql = "INSERT INTO artist (name, city, bio) VALUES (?, ?, ?)";
-        try (Connection conn = dataSource.getConnection();
+        try (Connection conn = ConnectionManager.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, artist.getName());
             ps.setString(2, artist.getCity());
@@ -63,7 +57,7 @@ public class JdbcArtistDao implements ArtistDao {
     @Override
     public void update(Artist artist) {
         String sql = "UPDATE artist SET city = ?, bio = ? WHERE name = ?";
-        try (Connection conn = dataSource.getConnection();
+        try (Connection conn = ConnectionManager.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, artist.getCity());
             ps.setString(2, artist.getBio());
@@ -80,7 +74,7 @@ public class JdbcArtistDao implements ArtistDao {
     @Override
     public void delete(String artistName) {
         String sql = "DELETE FROM artist WHERE name = ?";
-        try (Connection conn = dataSource.getConnection();
+        try (Connection conn = ConnectionManager.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, artistName);
             ps.executeUpdate();
@@ -94,7 +88,7 @@ public class JdbcArtistDao implements ArtistDao {
     public List<Artist> findByCity(String city) {
         String sql = "SELECT name, city, bio FROM artist WHERE city = ?";
         List<Artist> artists = new ArrayList<>();
-        try (Connection conn = dataSource.getConnection();
+        try (Connection conn = ConnectionManager.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, city);
             try (ResultSet rs = ps.executeQuery()) {
