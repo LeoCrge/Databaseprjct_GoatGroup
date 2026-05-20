@@ -18,10 +18,7 @@ public class InMemoryCommunityService implements CommunityService {
         CommunityMember bob = addMember("Bob Ross", "bob@happytrees.com", "London");
         CommunityMember charlie = addMember("Charlie Brown", "charlie@peanuts.com", "New York");
 
-        addReview(alice, artworkService.getArtworkByTitle("Mona Lisa").orElse(null), 5, "Unbelievable detail!");
-        addReview(bob, artworkService.getArtworkByTitle("Water Lilies").orElse(null), 4, "The colors are stunning.");
-        addReview(charlie, artworkService.getArtworkByTitle("The Thinker").orElse(null), 5, "Deeply moving.");
-    }
+        }
 
     private CommunityMember addMember(String name, String email, String city) {
         CommunityMember m = new CommunityMember(name, email);
@@ -53,5 +50,20 @@ public class InMemoryCommunityService implements CommunityService {
         if (member == null)
             return Collections.emptyList();
         return member.getReviews();
+    }
+
+    @Override
+    public void createMember(CommunityMember member) {
+
+    }
+
+    @Override
+    public void updateMember(CommunityMember member) {
+
+    }
+
+    @Override
+    public void deleteMember(String name) {
+
     }
 }

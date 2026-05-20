@@ -8,6 +8,8 @@ import java.util.Optional;
 public interface ArtistService {
     List<Artist> getAllArtists();
 
+    List<Artist> getArtistByCity(String city);
+
     Optional<Artist> getArtistByName(String name);
 
     void createArtist(Artist artist);

@@ -22,17 +22,13 @@ public class InMemoryGalleryService implements GalleryService {
 
         // Add Exhibitions
         addExhibition("Renaissance Revival", LocalDate.now().minusMonths(1), LocalDate.now().plusMonths(2), louvre,
-                "Dr. Elena Rossi", "Classic Renaissance",
-                artworkService.getArtworkByTitle("Mona Lisa").orElse(null),
-                artworkService.getArtworkByTitle("The Last Supper").orElse(null));
+                "Dr. Elena Rossi", "Classic Renaissance");
 
         addExhibition("Sculpting the Soul", LocalDate.now().minusDays(15), LocalDate.now().plusMonths(1), british,
-                "Marcus Thorne", "Modern & Classical Sculpture",
-                artworkService.getArtworkByTitle("The Thinker").orElse(null));
+                "Marcus Thorne", "Modern & Classical Sculpture");
 
         addExhibition("Impressionist Dreams", LocalDate.now().minusMonths(2), LocalDate.now().plusMonths(3), met,
-                "Sarah Jenkins", "Light and Color",
-                artworkService.getArtworkByTitle("Water Lilies").orElse(null));
+                "Sarah Jenkins", "Light and Color");
     }
 
     private Gallery addGallery(String name, String address, double rating) {

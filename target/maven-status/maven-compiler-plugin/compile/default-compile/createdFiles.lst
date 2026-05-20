@@ -1,4 +1,5 @@
 com\project\artconnect\ui\ExhibitionController.class
+com\project\artconnect\service\impl\InMemoryWorkshopService$JdbcArtistService.class
 com\project\artconnect\service\WorkshopService.class
 com\project\artconnect\model\Artwork.class
 com\project\artconnect\model\CommunityMember.class
@@ -22,11 +23,14 @@ com\project\artconnect\ui\DiscoverController.class
 com\project\artconnect\util\ConnectionManager.class
 com\project\artconnect\ui\DiscoverController$2.class
 com\project\artconnect\util\ServiceProvider.class
+com\project\artconnect\service\impl\JdbcCommunityService.class
 com\project\artconnect\model\ArtworkTag.class
 com\project\artconnect\service\impl\InMemoryWorkshopService.class
 com\project\artconnect\service\GalleryService.class
 com\project\artconnect\dao\CommunityMemberDao.class
+com\project\artconnect\service\impl\JdbcArtistService.class
 com\project\artconnect\MainApp.class
+com\project\artconnect\service\impl\JdbcArtworkService.class
 com\project\artconnect\model\Artist.class
 com\project\artconnect\service\CommunityService.class
 com\project\artconnect\ui\GalleryController$1.class
@@ -38,7 +42,9 @@ com\project\artconnect\service\impl\InMemoryGalleryService.class
 com\project\artconnect\model\Discipline.class
 com\project\artconnect\ui\WorkshopController.class
 com\project\artconnect\model\Exhibition.class
+com\project\artconnect\service\impl\JdbcWorkshopService.class
 com\project\artconnect\dao\ExhibitionDao.class
 com\project\artconnect\persistence\JdbcArtistDao.class
 com\project\artconnect\dao\WorkshopDao.class
 com\project\artconnect\model\Gallery.class
+com\project\artconnect\service\impl\JdbcGalleryService.class

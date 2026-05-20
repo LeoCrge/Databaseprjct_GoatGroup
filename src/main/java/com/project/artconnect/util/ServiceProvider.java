@@ -8,8 +8,8 @@ import com.project.artconnect.service.impl.*;
  * initialization.
  */
 public class ServiceProvider {
-    private static final InMemoryArtistService artistService = new InMemoryArtistService();
-    private static final InMemoryArtworkService artworkService = new InMemoryArtworkService();
+    private static final ArtistService artistService = new JdbcArtistService();
+    private static final ArtworkService artworkService = new InMemoryArtworkService();
     private static final InMemoryGalleryService galleryService = new InMemoryGalleryService();
     private static final InMemoryWorkshopService workshopService = new InMemoryWorkshopService();
     private static final InMemoryCommunityService communityService = new InMemoryCommunityService();

@@ -1,13 +1,18 @@
 package com.project.artconnect.service.impl;
 
-import com.project.artconnect.model.Workshop;
-import com.project.artconnect.model.Booking;
-import com.project.artconnect.model.Artist;
-import com.project.artconnect.model.CommunityMember;
+import com.project.artconnect.dao.ArtistDao;
+import com.project.artconnect.model.*;
 import com.project.artconnect.service.WorkshopService;
 import com.project.artconnect.service.ArtistService;
+import com.project.artconnect.util.ConnectionManager;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class InMemoryWorkshopService implements WorkshopService {
     private final Map<String, Workshop> workshops = new LinkedHashMap<>();
@@ -15,14 +20,7 @@ public class InMemoryWorkshopService implements WorkshopService {
     public InMemoryWorkshopService() {
     }
 
-    public void initData(ArtistService artistService) {
-        addWorkshop("Mastering Oil Painting", LocalDateTime.now().plusDays(5),
-                artistService.getArtistByName("Leonardo Vinci").orElse(null), 150.0, "Intermediate", "Florence Studio");
-        addWorkshop("Impressionist Landscapes", LocalDateTime.now().plusDays(10),
-                artistService.getArtistByName("Claude Monet").orElse(null), 120.0, "Beginner", "Giverny Gardens");
-        addWorkshop("Sculpting Modernity", LocalDateTime.now().plusDays(15),
-                artistService.getArtistByName("Auguste Rodin").orElse(null), 200.0, "Advanced", "Paris Workshop");
-    }
+
 
     private void addWorkshop(String title, LocalDateTime date, Artist instructor, double price, String level,
             String location) {
@@ -59,5 +57,71 @@ public class InMemoryWorkshopService implements WorkshopService {
         if (member == null)
             return Collections.emptyList();
         return member.getBookings();
+    }
+
+    public void initData(ArtistService artistService) {
+    }
+
+    public static class JdbcArtistService implements ArtistService {
+        private final ArtistDao artistDao;
+
+        public JdbcArtistService(ArtistDao artistDao) {
+            this.artistDao = artistDao;
+        }
+
+        @Override
+        public List<Artist> getAllArtists() {
+            return artistDao.findAll();
+        }
+
+        @Override
+        public List<Artist> getArtistByCity(String city) {
+            return artistDao.findByCity(city);
+        }
+
+        @Override
+        public Optional<Artist> getArtistByName(String name) {
+            return Optional.empty();
+        }
+
+        @Override
+        public void createArtist(Artist artist) {
+            artistDao.save(artist);
+        }
+
+        @Override
+        public void updateArtist(Artist artist) {
+            artistDao.update(artist);
+        }
+
+        @Override
+        public void deleteArtist(String name) {
+            artistDao.delete(name);
+        }
+
+        @Override
+        public List<Discipline> getAllDisciplines() {
+            List<Discipline> disciplines = new ArrayList<>();
+            String sql = "SELECT * FROM Discipline";
+            try (Connection conn = ConnectionManager.getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(sql);
+                 ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    disciplines.add(new Discipline(rs.getString("name")));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return disciplines;
+        }
+
+        @Override
+        public List<Artist> searchArtists(String query, String disciplineName, String city) {
+            return artistDao.findAll().stream()
+                    .filter(a -> query == null || a.getName().toLowerCase().contains(query.toLowerCase()))
+                    .filter(a -> city == null || city.isEmpty()
+                            || (a.getCity() != null && a.getCity().equalsIgnoreCase(city)))
+                    .collect(Collectors.toList());
+        }
     }
 }

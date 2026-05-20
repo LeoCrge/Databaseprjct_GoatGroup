@@ -55,6 +55,10 @@ public class InMemoryArtistService implements ArtistService {
     }
 
     @Override
+    public List<Artist> getArtistByCity(String city) {
+        return List.of();
+    }
+    @Override
     public Optional<Artist> getArtistByName(String name) {
         return Optional.ofNullable(artists.get(name));
     }

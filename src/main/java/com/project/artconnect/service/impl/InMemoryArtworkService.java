@@ -14,19 +14,7 @@ public class InMemoryArtworkService implements ArtworkService {
     }
 
     public void initData(ArtistService artistService) {
-        addArtwork("Mona Lisa", 1503, "Painting", 850000000.0,
-                artistService.getArtistByName("Leonardo Vinci").orElse(null));
-        addArtwork("The Thinker", 1904, "Sculpture", 15000000.0,
-                artistService.getArtistByName("Auguste Rodin").orElse(null));
-        addArtwork("Water Lilies", 1919, "Painting", 40000000.0,
-                artistService.getArtistByName("Claude Monet").orElse(null));
-        addArtwork("The Two Fridas", 1939, "Painting", 5000000.0,
-                artistService.getArtistByName("Frida Kahlo").orElse(null));
-        addArtwork("Monolith, The Face of Half Dome", 1927, "Photography", 100000.0,
-                artistService.getArtistByName("Ansel Adams").orElse(null));
-        addArtwork("The Last Supper", 1498, "Painting", 450000000.0,
-                artistService.getArtistByName("Leonardo Vinci").orElse(null));
-    }
+       }
 
     private void addArtwork(String title, int year, String type, double price, Artist artist) {
         if (artist == null)
@@ -42,11 +30,6 @@ public class InMemoryArtworkService implements ArtworkService {
     @Override
     public List<Artwork> getAllArtworks() {
         return new ArrayList<>(artworks.values());
-    }
-
-    @Override
-    public Optional<Artwork> getArtworkByTitle(String title) {
-        return Optional.ofNullable(artworks.get(title));
     }
 
     @Override

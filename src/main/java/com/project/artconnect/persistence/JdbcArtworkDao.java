@@ -79,6 +79,7 @@ public class JdbcArtworkDao implements ArtworkDao {
 
     @Override
     public List<Artwork> findByArtistName(String artistName) {
-        throw new UnsupportedOperationException("JDBC Implementation not yet provided.");
+        return List.of();
     }
+
 }
