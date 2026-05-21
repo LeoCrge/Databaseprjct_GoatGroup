@@ -239,3 +239,59 @@ FOREIGN KEY (id_instructor) REFERENCES artist(id_artist);
 ALTER TABLE artwork 
 ADD CONSTRAINT artwork_ibfk_1 
 FOREIGN KEY (id_artist) REFERENCES artist(id_artist);
+
+
+create trigger change_review
+BEFORE update on review
+FOR EACH ROW
+BEGIN
+	new.reviewdate = localdate.now()
+END;
+
+CREATE TRIGGER ValidateEmail
+BEFORE INSERT ON communitymember
+FOR EACH ROW
+BEGIN
+	IF NEW.email NOT LIKE '%@%' THEN
+    	SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Invalid Email';
+    END IF; 
+END;
+
+CREATE TRIGGER LogInsert 
+AFTER INSERT ON communitymember
+FOR EACH ROW 
+BEGIN 
+INSERT INTO logs (description, date_action) 
+VALUES ('New user added: ' || NEW.name, NOW()); 
+END;
+
+CREATE Procedure NumberofParticipant 
+@workshop varchar(50)
+Begin
+	Select *  
+From booking 
+	Where workshop.title = @workshop;
+End
+
+Create Procedure SearchMember
+@name
+Begin
+	Select * 
+	From members
+	Where name = @name
+End
+
+start transaction;
+insert into books values (4,1,2, "2024-06-10","Pending");
+insert into books values(5,1,4,"2024-08-20","Pending");
+insert into books values(6,1,5,"2024-09-05","Pending");
+insert into books values(7,1,6,"2024-10-12","Pending");
+update books set Payment_status = "Paid" where id_booking = 2;
+
+-- Find artwork by title
+create index idx_artwork_title on artwork (title);
+-- Find which artist are still active or not
+create index idx_artist_active on artist (is_active);
+-- Find the exhibition based on the date
+create index idx_exhib_startdate on exhibition (start_date);
+
