@@ -17,4 +17,6 @@ public interface CommunityService {
     void updateMember(CommunityMember member);
 
     void deleteMember(String name);
+
+    void initData(ArtworkService artworkService);
 }

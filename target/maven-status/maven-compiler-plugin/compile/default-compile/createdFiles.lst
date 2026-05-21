@@ -4,6 +4,7 @@ com\project\artconnect\service\WorkshopService.class
 com\project\artconnect\model\Artwork.class
 com\project\artconnect\model\CommunityMember.class
 com\project\artconnect\persistence\JdbcArtworkDao.class
+com\project\artconnect\persistence\JdbcGalleryDao.class
 com\project\artconnect\service\impl\InMemoryCommunityService.class
 com\project\artconnect\dao\ArtistDao.class
 com\project\artconnect\dao\ArtworkDao.class
@@ -16,6 +17,7 @@ com\project\artconnect\model\Artwork$Status.class
 com\project\artconnect\model\Review.class
 com\project\artconnect\ui\ArtistController.class
 com\project\artconnect\dao\GalleryDao.class
+com\project\artconnect\persistence\JdbcWorkshopDao.class
 com\project\artconnect\service\impl\InMemoryArtistService.class
 com\project\artconnect\ui\GalleryController.class
 com\project\artconnect\model\Workshop.class
@@ -45,6 +47,7 @@ com\project\artconnect\model\Exhibition.class
 com\project\artconnect\service\impl\JdbcWorkshopService.class
 com\project\artconnect\dao\ExhibitionDao.class
 com\project\artconnect\persistence\JdbcArtistDao.class
+com\project\artconnect\persistence\JdbcCommunityMemberDao.class
 com\project\artconnect\dao\WorkshopDao.class
 com\project\artconnect\model\Gallery.class
 com\project\artconnect\service\impl\JdbcGalleryService.class

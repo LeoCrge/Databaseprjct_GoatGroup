@@ -3,6 +3,7 @@ package com.project.artconnect.service.impl;
 import com.project.artconnect.dao.CommunityMemberDao;
 import com.project.artconnect.model.CommunityMember;
 import com.project.artconnect.model.Review;
+import com.project.artconnect.service.ArtworkService;
 import com.project.artconnect.service.CommunityService;
 
 import java.util.Collections;
@@ -49,5 +50,10 @@ public class JdbcCommunityService implements CommunityService {
     @Override
     public void deleteMember(String name) {
         memberDao.delete(name);
+    }
+
+    @Override
+    public void initData(ArtworkService artworkService) {
+
     }
 }
