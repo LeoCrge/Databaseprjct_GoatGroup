@@ -1,0 +1,241 @@
+create database ArtConnect;
+use artconnect;
+CREATE TABLE Artist (
+    id_artist INT PRIMARY KEY,
+    Name VARCHAR(100),
+    Bio TEXT,
+    Birth_year INT,
+    contact_mail VARCHAR(100),
+    phone VARCHAR(20),
+    city VARCHAR(50),
+    website VARCHAR(100),
+    is_active BOOLEAN
+);
+
+CREATE TABLE Artwork (
+    id_artwork INT PRIMARY KEY,
+    id_artist INT,
+    Title VARCHAR(150),
+    creation_year INT,
+    type VARCHAR(50),
+    medium VARCHAR(50),
+    description TEXT,
+    dimensions VARCHAR(50),
+    price DECIMAL(10,2),
+    status VARCHAR(50),
+    FOREIGN KEY (id_artist) REFERENCES Artist(id_artist)
+);
+
+CREATE TABLE tags (
+    id_artwork INT,
+    id_tag INT,
+    PRIMARY KEY (id_artwork, id_tag),
+    FOREIGN KEY (id_artwork) REFERENCES Artwork(id_artwork)
+);
+
+CREATE TABLE Artworktag (
+    id_tag INT PRIMARY KEY,
+    tag_name VARCHAR(50)
+);
+
+CREATE TABLE Gallery (
+    id_gallery INT PRIMARY KEY,
+    name VARCHAR(100),
+    address VARCHAR(150),
+    ownername VARCHAR(100),
+    opening_hours VARCHAR(100),
+    contact_phone VARCHAR(20),
+    rating FLOAT,
+    website VARCHAR(100)
+);
+
+CREATE TABLE Exhibition (
+    id_exhibition INT PRIMARY KEY,
+    id_gallery INT,
+    Title VARCHAR(150),
+    start_date DATE,
+    end_date DATE,
+    description TEXT,
+    curator_name VARCHAR(100),
+    theme VARCHAR(100),
+    FOREIGN KEY (id_gallery) REFERENCES Gallery(id_gallery)
+);
+
+CREATE TABLE shows (
+    id_exhibition INT,
+    id_artwork INT,
+    PRIMARY KEY (id_exhibition, id_artwork),
+    FOREIGN KEY (id_exhibition) REFERENCES Exhibition(id_exhibition),
+    FOREIGN KEY (id_artwork) REFERENCES Artwork(id_artwork)
+);
+
+CREATE TABLE Reviews (
+    id_review INT PRIMARY KEY,
+    id_member INT,
+    id_artwork INT,
+    rating INT,
+    comment TEXT,
+    review_date DATE,
+    FOREIGN KEY (id_artwork) REFERENCES Artwork(id_artwork)
+);
+
+CREATE TABLE CommunityMember (
+    id_member INT PRIMARY KEY,
+    Name VARCHAR(100),
+    Email VARCHAR(100),
+    BirthYear INT,
+    phone VARCHAR(20),
+    city VARCHAR(50),
+    favDiscipline VARCHAR(50),
+    Membership_type VARCHAR(50)
+);
+
+CREATE TABLE Discipline (
+    id_discipline INT PRIMARY KEY,
+    name VARCHAR(100)
+);
+
+CREATE TABLE Chooses (
+    id_member INT,
+    id_discipline INT,
+    PRIMARY KEY (id_member, id_discipline),
+    FOREIGN KEY (id_member) REFERENCES CommunityMember(id_member),
+    FOREIGN KEY (id_discipline) REFERENCES Discipline(id_discipline)
+);
+
+CREATE TABLE workshop (
+    id_workshop INT PRIMARY KEY,
+    id_instructor INT,
+    title VARCHAR(150),
+    dates VARCHAR(100),
+    duration_minutes INT,
+    max_participant INT,
+    price DECIMAL(10,2),
+    location VARCHAR(100),
+    description TEXT,
+    level VARCHAR(50),
+    FOREIGN KEY (id_instructor) REFERENCES Artist(id_artist)
+);
+
+CREATE TABLE Books (
+    id_booking INT PRIMARY KEY,
+    id_member INT,
+    id_workshop INT,
+    Booking_date DATE,
+    Payment_Status VARCHAR(50),
+    FOREIGN KEY (id_member) REFERENCES CommunityMember(id_member),
+    FOREIGN KEY (id_workshop) REFERENCES workshop(id_workshop)
+);
+
+
+
+-- Artists
+INSERT INTO Artist VALUES
+(1, 'Alice Dubois', 'Contemporary painter inspired by nature', 1985, 'alice@mail.com', '0600000001', 'Paris', 'www.alicedubois.com', TRUE),
+(2, 'Marc Lefevre', 'Digital artist and sculptor', 1990, 'marc@mail.com', '0600000002', 'Lyon', 'www.marclefevre.com', TRUE),
+(3, 'Sofia Rossi', 'Abstract expressionist', 1982, 'sofia@mail.com', '0600000003', 'Rome', 'www.sofiarossi.com', TRUE);
+
+-- Artworks
+INSERT INTO Artwork VALUES
+(1, 1, 'Sunset Dreams', 2020, 'Painting', 'Oil on canvas', 'A colorful sunset', '80x60', 1200.00, 'Available'),
+(2, 1, 'Forest Whisper', 2021, 'Painting', 'Acrylic', 'Deep forest atmosphere', '100x70', 1500.00, 'Sold'),
+(3, 2, 'Digital Soul', 2022, 'Digital', '3D Render', 'Futuristic portrait', '1920x1080', 800.00, 'Available'),
+(4, 3, 'Chaos Within', 2019, 'Painting', 'Mixed media', 'Abstract chaos', '90x90', 2000.00, 'Available');
+
+-- Tags
+INSERT INTO Artworktag VALUES
+(1, 'Nature'),
+(2, 'Abstract'),
+(3, 'Digital'),
+(4, 'Portrait');
+
+INSERT INTO tags VALUES
+(1,1),
+(2,1),
+(3,3),
+(4,2);
+
+-- Galleries
+INSERT INTO Gallery VALUES
+(1, 'Modern Art Space', '12 rue de Paris, Paris', 'Jean Martin', '10:00-18:00', '0102030405', 4.5, 'www.modernartspace.com'),
+(2, 'Digital Dreams Gallery', '5 avenue Lyon, Lyon', 'Claire Bernard', '11:00-19:00', '0102030406', 4.2, 'www.digitaldreams.com');
+
+-- Exhibitions
+INSERT INTO Exhibition VALUES
+(1, 1, 'Nature & Emotions', '2024-01-10', '2024-02-10', 'Exploring nature in art', 'Emma Laurent', 'Nature'),
+(2, 2, 'Future Visions', '2024-03-01', '2024-04-01', 'Digital future artworks', 'Paul Henry', 'Technology');
+
+-- Shows
+INSERT INTO shows VALUES
+(1,1),
+(1,2),
+(2,3);
+
+-- Community Members
+INSERT INTO CommunityMember VALUES
+(1, 'John Smith', 'john@mail.com', 1995, '0700000001', 'Paris', 'Painting', 'Premium'),
+(2, 'Emma Brown', 'emma@mail.com', 1988, '0700000002', 'Lyon', 'Digital Art', 'Basic');
+
+-- Reviews
+INSERT INTO Reviews VALUES
+(1, 1, 1, 5, 'Amazing artwork!', '2024-01-15'),
+(2, 2, 3, 4, 'Very creative', '2024-03-10');
+
+-- Discipline
+INSERT INTO Discipline VALUES
+(1, 'Painting'),
+(2, 'Sculpture'),
+(3, 'Digital Art');
+
+-- Chooses
+INSERT INTO Chooses VALUES
+(1,1),
+(1,3),
+(2,3);
+
+-- Workshops
+INSERT INTO workshop VALUES
+(1, 1, 'Oil Painting Basics', '2024-05-01', 120, 10, 50.00, 'Paris Studio', 'Learn oil painting', 'Beginner'),
+(2, 2, '3D Art Creation', '2024-06-10', 180, 8, 80.00, 'Lyon Lab', 'Create digital 3D art', 'Intermediate'),
+(3, 1, 'Watercolor Techniques', '2024-07-15', 90, 12, 40.00, 'Marseille Atelier', 'Explore watercolor styles', 'Beginner'),
+(4, 1, 'Advanced Sculpture', '2024-08-20', 240, 6, 120.00, 'Nice Studio', 'Master sculpting techniques', 'Advanced'),
+(5, 1, 'Digital Illustration', '2024-09-05', 150, 10, 70.00, 'Paris Digital Hub', 'Create illustrations using tablets', 'Intermediate'),
+(6, 1, 'Photography Masterclass', '2024-10-12', 180, 15, 90.00, 'Bordeaux Center', 'Professional photography skills', 'Advanced'),
+(7, 1, 'Calligraphy Workshop', '2024-11-03', 120, 10, 45.00, 'Toulouse Studio', 'Learn modern calligraphy', 'Beginner'),
+(8, 1, 'Street Art & Graffiti', '2024-11-25', 200, 8, 75.00, 'Lille Urban Space', 'Introduction to street art', 'Intermediate'),
+(9, 1, 'Ceramics & Pottery', '2024-12-10', 180, 10, 85.00, 'Strasbourg Clay Studio', 'Hands-on pottery making', 'Beginner'),
+(10, 1, 'Animation Fundamentals', '2025-01-15', 160, 12, 95.00, 'Paris Animation Lab', 'Basics of 2D animation', 'Intermediate');
+
+-- Bookings
+INSERT INTO Books VALUES
+(1, 1, 1, '2024-04-01', 'Paid'),
+(2, 2, 2, '2024-05-15', 'Pending');
+
+
+-- Find artwork by title
+create index idx_artwork_title on artwork (title);
+-- Find which artist are still active or not
+create index idx_artist_active on artist (is_active);
+-- Find the exhibition based on the date
+create index idx_exhib_startdate on exhibition (start_date);
+use artconnect;
+select * from communitymember;
+select * from books;
+select * from workshop;
+
+start transaction;
+insert into books values (4,1,2, "2024-06-10","Pending");
+insert into books values(5,1,4,"2024-08-20","Pending");
+insert into books values(6,1,5,"2024-09-05","Pending");
+insert into books values(7,1,6,"2024-10-12","Pending");
+update books set Payment_status = "Paid" where id_booking = 2;
+
+ALTER TABLE artwork DROP FOREIGN KEY artwork_ibfk_1;
+
+ALTER TABLE workshop 
+ADD CONSTRAINT workshop_ibfk_1 
+FOREIGN KEY (id_instructor) REFERENCES artist(id_artist);
+
+ALTER TABLE artwork 
+ADD CONSTRAINT artwork_ibfk_1 
+FOREIGN KEY (id_artist) REFERENCES artist(id_artist);
