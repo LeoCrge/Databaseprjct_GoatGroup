@@ -1,5 +1,13 @@
 package com.project.artconnect.util;
 
+import com.project.artconnect.dao.ArtworkDao;
+import com.project.artconnect.dao.CommunityMemberDao;
+import com.project.artconnect.dao.GalleryDao;
+import com.project.artconnect.dao.WorkshopDao;
+import com.project.artconnect.persistence.JdbcArtworkDao;
+import com.project.artconnect.persistence.JdbcCommunityMemberDao;
+import com.project.artconnect.persistence.JdbcGalleryDao;
+import com.project.artconnect.persistence.JdbcWorkshopDao;
 import com.project.artconnect.service.*;
 import com.project.artconnect.service.impl.*;
 
@@ -9,10 +17,14 @@ import com.project.artconnect.service.impl.*;
  */
 public class ServiceProvider {
     private static final ArtistService artistService = new JdbcArtistService();
-    private static final ArtworkService artworkService = new InMemoryArtworkService();
-    private static final InMemoryGalleryService galleryService = new InMemoryGalleryService();
-    private static final InMemoryWorkshopService workshopService = new InMemoryWorkshopService();
-    private static final InMemoryCommunityService communityService = new InMemoryCommunityService();
+    static GalleryDao galleryDao = new JdbcGalleryDao();
+    static ArtworkDao artworksDao = new JdbcArtworkDao();
+    static WorkshopDao workshopDao = new JdbcWorkshopDao();
+    static CommunityMemberDao communityMemberDao = new JdbcCommunityMemberDao();
+    private static final ArtworkService artworkService = new JdbcArtworkService(artworksDao);
+    private static final GalleryService galleryService = new JdbcGalleryService(galleryDao);
+    private static final WorkshopService workshopService = new JdbcWorkshopService(workshopDao);
+    private static final CommunityService communityService = new JdbcCommunityService(communityMemberDao);
 
     static {
         // Initialize services with their dependencies

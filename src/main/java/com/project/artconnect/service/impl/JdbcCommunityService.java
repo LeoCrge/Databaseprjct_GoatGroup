@@ -13,7 +13,6 @@ public class JdbcCommunityService implements CommunityService {
 
     private final CommunityMemberDao memberDao;
 
-    // Constructor Injection
     public JdbcCommunityService(CommunityMemberDao memberDao) {
         this.memberDao = memberDao;
     }
